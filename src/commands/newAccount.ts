@@ -13,6 +13,9 @@ export async function newAccountCommand(ctx: Context) {
 
         // Get account name from command arguments
         const accountName = ctx.match;
+
+        await ctx.reply('Please provide an account name.\nExample: /new_account Cash');
+        return;
         
         if (!accountName) {
             await ctx.reply('Please provide an account name.\nExample: /new_account Cash');

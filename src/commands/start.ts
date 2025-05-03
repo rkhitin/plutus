@@ -1,5 +1,6 @@
 import { Context } from 'grammy';
 import { User } from '../models/User';
+import { StateMachine } from '../state';
 
 export async function startCommand(ctx: Context) {
     try {
@@ -18,6 +19,8 @@ export async function startCommand(ctx: Context) {
             const newUser = new User({ telegramId });
             await newUser.save();
             await ctx.reply('Welcome to Plutus Finance Bot! 🎉');
+
+            StateMachine.setState(telegramId, 'new_account');
         } else {
             await ctx.reply('Welcome back to Plutus Finance Bot! 🎉');
         }
