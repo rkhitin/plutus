@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { BaseDocument } from './interfaces';
 
 export interface ITransaction extends BaseDocument {
-  categoryId: string;
+  categoryId?: string;
   reasonId: string;
   accountId: string;
   amount: number;
@@ -13,7 +13,7 @@ export interface ITransaction extends BaseDocument {
 
 const transactionSchema = new Schema<ITransaction>({
   userId: { type: String, required: true },
-  categoryId: { type: String, required: true },
+  categoryId: { type: String, required: false },
   reasonId: { type: String, required: true },
   accountId: { type: String, required: true },
   amount: { type: Number, required: true },

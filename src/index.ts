@@ -1,22 +1,17 @@
 import 'dotenv/config';
-import { Bot } from 'grammy';
+import { connectToDatabase, disconnectFromDatabase } from './database';
+import { startBot } from './bot';
 
-// Get the bot token from environment variables
-const botToken = process.env.TELEGRAM_BOT_TOKEN;
-if (!botToken) {
-    throw new Error('TELEGRAM_BOT_TOKEN is not defined in environment variables');
+async function initialize() {
+    await connectToDatabase();
+    startBot();
 }
 
-// Create a bot instance
-const bot = new Bot(botToken);
-
-// Handle any message
-bot.on('message', async (ctx) => {
-    await ctx.reply('Hello!');
+// Handle process termination
+process.on('SIGTERM', async () => {
+    await disconnectFromDatabase();
+    process.exit(0);
 });
 
-// Start the bot
-bot.start();
-
-// Log that the bot is running
-console.log('Bot is running...');
+// Start the application
+initialize();
